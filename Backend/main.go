@@ -6,6 +6,7 @@ import (
 	"fmt"
 	"github.com/joho/godotenv"
 	"github.com/labstack/echo/v4"
+	"github.com/labstack/echo/v4/middleware"
 	"log"
 )
 
@@ -20,6 +21,15 @@ func main() {
 	}
 	e := echo.New()
 	routes.RegisterRoutes(e)
+	e.Use(middleware.Logger())
+	e.Use(middleware.Recover())
+
+	// Add CORS middleware
+	e.Use(middleware.CORSWithConfig(middleware.CORSConfig{
+		AllowOrigins: []string{"http://localhost:5173"},                    // Allow only your frontend's origin
+		AllowMethods: []string{echo.GET, echo.POST, echo.PUT, echo.DELETE}, // Allow specific HTTP methods
+		AllowHeaders: []string{echo.HeaderOrigin, echo.HeaderContentType, echo.HeaderAccept},
+	}))
 	e.Logger.Fatal(e.Start(":8080"))
 
 }

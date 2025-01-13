@@ -16,10 +16,11 @@ export function SignIn(){
     const passwordRef = useRef<HTMLInputElement>(null);
     // const redirect = useNavigate();
 
-    const email = emailRef.current?.value; 
-    const password = passwordRef.current?.value; 
+
 
     async function handleClick(){
+        const email = emailRef.current?.value;
+        const password = passwordRef.current?.value;
         if(!email || !password) {
             console.log("please fill all the details");
             return;
@@ -28,7 +29,7 @@ export function SignIn(){
         setIsLoading(true);
 
         try {
-            const response = await axios.post(BASE_URL + "/signin",{
+            const response = await axios.post(BASE_URL + "/getEmployeeByEmailAndPassword",{
                 email,
                 password
             })

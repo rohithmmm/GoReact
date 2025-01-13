@@ -21,17 +21,17 @@ export function SignUp(){
 
     async function handleClick(){
         
-        const firstName = firstNameRef.current?.value;
-        const lastName = lastNameRef.current?.value;
+        const first_name = firstNameRef.current?.value;
+        const last_name = lastNameRef.current?.value;
         const email = emailRef.current?.value; 
         const password = passwordRef.current?.value; 
 
         console.log("email: ",email);
         console.log("password: ",password);
-        console.log("firstName: ",firstName);
-        console.log("lastName: ",lastName);
+        console.log("firstName: ",first_name);
+        console.log("lastName: ",last_name);
 
-        if(!firstName || !lastName || !email || !password) {
+        if(!first_name || !last_name || !email || !password) {
             console.log("please fill all the details");
             return;
         }
@@ -39,12 +39,9 @@ export function SignUp(){
         setIsLoading(true);
 
         try {
-            setTimeout(() => {
-                console.log("waiting");
-            }, 3000);
-            const response = await axios.post(BASE_URL + "/signup",{
-                firstName,
-                lastName,
+            const response = await axios.post(BASE_URL + "/addEmployee",{
+                first_name,
+                last_name,
                 email,
                 password
             })

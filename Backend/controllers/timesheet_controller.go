@@ -22,3 +22,21 @@ func PostTimesheetController(timesheet *models.Timesheet, c echo.Context) error 
 	}
 	return c.JSON(http.StatusCreated, timesheet)
 }
+
+func ClockInController(c echo.Context) error {
+	var clockInTime string
+	if clockInTime = services.ClockInService(); clockInTime == "error" {
+		fmt.Println("Error")
+		return nil
+	}
+	return c.JSON(http.StatusCreated, "Clocked in at "+clockInTime)
+}
+
+func ClockOutController(c echo.Context) error {
+	var clockOutTime string
+	if clockOutTime = services.ClockOutService(); clockOutTime == "error" {
+		fmt.Println("Error")
+		return nil
+	}
+	return c.JSON(http.StatusCreated, "Clocked out at "+clockOutTime)
+}

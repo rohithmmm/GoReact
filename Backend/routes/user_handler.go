@@ -16,6 +16,20 @@ func AddTimesheet(e echo.Context) error {
 	return err
 }
 
+func ClockInHandler(e echo.Context) error {
+	if err := controllers.ClockInController(e); err != nil {
+		return err
+	}
+	return nil
+}
+
+func ClockOutHandler(e echo.Context) error {
+	if err := controllers.ClockOutController(e); err != nil {
+		return err
+	}
+	return nil
+}
+
 func AddEmployee(e echo.Context) error {
 	var employee *models.Employee
 	if err := e.Bind(&employee); err != nil {

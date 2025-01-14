@@ -28,14 +28,6 @@ func GetTimesheet() ([]models.Timesheet, error) {
 
 }
 
-func AddTimesheet(timesheet *models.Timesheet) error {
-	_, err := db.DB.Query("INSERT INTO timesheet (clock_in, clock_out) VALUES ($1,$2)", timesheet.Clock_in, timesheet.Clock_out)
-	if err != nil {
-		return err
-	}
-	return nil
-}
-
 var clockIn string
 
 func ClockInService() string {

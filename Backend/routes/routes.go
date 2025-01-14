@@ -7,7 +7,6 @@ import (
 
 func RegisterRoutes(e *echo.Echo) {
 	e.GET("/timesheet", controllers.GetTimesheetController)
-	e.POST("/addTime", AddTimesheet)
 	e.POST("/clockIn", ClockInHandler)
 	e.POST("/clockOut", ClockOutHandler)
 	e.POST("/addEmployee", AddEmployee)

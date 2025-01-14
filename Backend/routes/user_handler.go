@@ -7,15 +7,6 @@ import (
 	"github.com/labstack/echo/v4"
 )
 
-func AddTimesheet(e echo.Context) error {
-	var timesheet *models.Timesheet
-	if err := e.Bind(&timesheet); err != nil {
-		return err
-	}
-	err := controllers.PostTimesheetController(timesheet, e)
-	return err
-}
-
 func ClockInHandler(e echo.Context) error {
 	if err := controllers.ClockInController(e); err != nil {
 		return err

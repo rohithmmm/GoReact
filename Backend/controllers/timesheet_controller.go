@@ -1,7 +1,6 @@
 package controllers
 
 import (
-	"ClockMe/models"
 	"ClockMe/services"
 	"fmt"
 	"github.com/labstack/echo/v4"
@@ -14,13 +13,6 @@ func GetTimesheetController(c echo.Context) error {
 		fmt.Println("error:", err)
 	}
 	return c.JSON(http.StatusOK, timesheet)
-}
-
-func PostTimesheetController(timesheet *models.Timesheet, c echo.Context) error {
-	if err := services.AddTimesheet(timesheet); err != nil {
-		return err
-	}
-	return c.JSON(http.StatusCreated, timesheet)
 }
 
 func ClockInController(c echo.Context) error {

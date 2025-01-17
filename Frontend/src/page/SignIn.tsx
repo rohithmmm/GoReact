@@ -16,8 +16,6 @@ export function SignIn(){
     const passwordRef = useRef<HTMLInputElement>(null);
     // const redirect = useNavigate();
 
-
-
     async function handleClick(){
         const email = emailRef.current?.value;
         const password = passwordRef.current?.value;
@@ -44,7 +42,7 @@ export function SignIn(){
     return<div className="bg-black h-screen flex justify-center">
         <div className="flex flex-col justify-center">
         <Header/>
-            <div className="p-2 px-4 w-80 h-max text-center">
+            <div className="p-2 px-4 w-80 h-max text-center rounded-lg border border-slate-800 shadow-md shadow-slate-800">
                 <Heading label="Sign In"/>
                 <SubHeading label={"Enter your credentials"} />
                 <InputBox inputRef={emailRef} label={"Email"} placeholder={"johndoe@gmail.com"} />

@@ -56,7 +56,7 @@ export function SignUp(){
     return<div className="bg-black h-screen flex justify-center items-center">
         <div className="flex flex-col justify-center">
         <Header/>
-            <div className="p-2 px-4 w-80 text-center rounded-lg">
+            <div className="p-2 px-4 w-80 text-center rounded-lg border border-slate-800 shadow-md shadow-slate-800">
                 <Heading label="Sign Up"/>
                 <SubHeading label={"Please fill the below fields"} />
                 <InputBox inputRef={firstNameRef} label={"First name"} placeholder={"John"} />

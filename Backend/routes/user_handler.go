@@ -8,7 +8,11 @@ import (
 )
 
 func ClockInHandler(e echo.Context) error {
-	if err := controllers.ClockInController(e); err != nil {
+	var timesheet *models.Timesheet
+	if err := e.Bind(&timesheet); err != nil {
+		return err
+	}
+	if err := controllers.ClockInController(timesheet.Email, e); err != nil {
 		return err
 	}
 	return nil
@@ -24,7 +28,7 @@ func ClockOutHandler(e echo.Context) error {
 func AddEmployee(e echo.Context) error {
 	var employee *models.Employee
 	if err := e.Bind(&employee); err != nil {
-		fmt.Println(err)
+		return err
 	}
 	if err := controllers.AddEmployeeController(employee, e); err != nil {
 		return err

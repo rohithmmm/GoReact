@@ -9,7 +9,7 @@ import (
 
 func AddEmployeeController(employee *models.Employee, c echo.Context) error {
 	if err := services.AddEmployeeService(employee); err != nil {
-		return err
+		return c.JSON(http.StatusInternalServerError, err.Error())
 	}
 	return c.JSON(http.StatusCreated, employee)
 }

@@ -15,11 +15,10 @@ func GetTimesheetController(c echo.Context) error {
 	return c.JSON(http.StatusOK, timesheet)
 }
 
-func ClockInController(c echo.Context) error {
+func ClockInController(email string, c echo.Context) error {
 	var clockInTime string
-	if clockInTime = services.ClockInService(); clockInTime == "error" {
-		fmt.Println("Error")
-		return nil
+	if clockInTime = services.ClockInService(email); clockInTime == "error" {
+		return c.JSON(http.StatusInternalServerError, "ClockIn Error")
 	}
 	return c.JSON(http.StatusCreated, "Clocked in at "+clockInTime)
 }

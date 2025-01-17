@@ -29,10 +29,12 @@ func GetTimesheet() ([]models.Timesheet, error) {
 }
 
 var clockIn string
+var emailK string
 
-func ClockInService() string {
+func ClockInService(email string) string {
+	emailK = email
 	clockIn = time.Now().Format("2006-01-02 15:04:05")
-	_, err := db.DB.Query("INSERT INTO timesheet (clock_in,clock_out) VALUES ($1,$2)", time.Now().Format("2006-01-02 15:04:05"), time.Now().Format("2006-01-02 ")+"17:01:00")
+	_, err := db.DB.Exec("INSERT INTO timesheet (email, clock_in,clock_out) VALUES ($1,$2,$3)", email, time.Now().Format("2006-01-02 15:04:05"), time.Now().Format("2006-01-02 ")+"17:01:00")
 	if err != nil {
 		return "error"
 	}
@@ -41,7 +43,7 @@ func ClockInService() string {
 
 func ClockOutService() string {
 	clockOut := time.Now().Format("2006-01-02 15:04:05")
-	_, err := db.DB.Query("UPDATE timesheet SET clock_out = $1 WHERE clock_in = $2", clockOut, clockIn)
+	_, err := db.DB.Query("UPDATE timesheet SET email = $3, clock_out = $1 WHERE clock_in = $2", clockOut, clockIn, emailK)
 	if err != nil {
 		return "error"
 	}

@@ -1,6 +1,6 @@
 import axios from "axios";
 import { useRef, useState } from "react";
-// import { useNavigate } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import { Button } from "../components/Button";
 import { Header } from "../components/Header";
 import { Heading } from "../components/Heading";
@@ -14,7 +14,7 @@ export function SignIn(){
     
     const emailRef = useRef<HTMLInputElement>(null);
     const passwordRef = useRef<HTMLInputElement>(null);
-    // const redirect = useNavigate();
+    const redirect = useNavigate();
 
     async function handleClick(){
         const email = emailRef.current?.value;
@@ -27,12 +27,12 @@ export function SignIn(){
         setIsLoading(true);
 
         try {
-            const response = await axios.post(BASE_URL + "/getEmployeeByEmailAndPassword",{
+            const response = await axios.post(BASE_URL + "/signIn",{
                 email,
                 password
             })
             console.log(response.data);
-            // redirect('/');
+            redirect('/dashboard');
         } catch(error) {
             console.error(error);
             setIsLoading(false);

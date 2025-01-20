@@ -12,14 +12,18 @@ func ClockInHandler(e echo.Context) error {
 	if err := e.Bind(&timesheet); err != nil {
 		return err
 	}
-	if err := controllers.ClockInController(timesheet.Email, e); err != nil {
+	if err := controllers.ClockInController(timesheet.Email, timesheet.Token, e); err != nil {
 		return err
 	}
 	return nil
 }
 
 func ClockOutHandler(e echo.Context) error {
-	if err := controllers.ClockOutController(e); err != nil {
+	var timesheet *models.Timesheet
+	if err := e.Bind(&timesheet); err != nil {
+		return err
+	}
+	if err := controllers.ClockOutController(timesheet.Email, timesheet.Token, e); err != nil {
 		return err
 	}
 	return nil

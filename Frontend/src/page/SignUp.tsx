@@ -12,6 +12,7 @@ import { BASE_URL } from "../utils/config";
 
 export function SignUp(){
     const [isLoading, setIsLoading] = useState(false);
+    const [error, setError] = useState("");
 
     const firstNameRef = useRef<HTMLInputElement>(null);
     const lastNameRef = useRef<HTMLInputElement>(null);
@@ -32,7 +33,7 @@ export function SignUp(){
         console.log("lastName: ",last_name);
 
         if(!first_name || !last_name || !email || !password) {
-            console.log("please fill all the details");
+            setError("Please fill all the details");
             return;
         }
 
@@ -48,7 +49,7 @@ export function SignUp(){
             console.log(response.data);
             redirect('/signin');
         } catch(error) {
-            console.error(error);
+            setError(error.response?.data);
             setIsLoading(false);
         }
     }
@@ -66,8 +67,14 @@ export function SignUp(){
                 <div className="pt-4">
                     <Button label={isLoading ? "Loading..." : "Sign Up"} onClick={handleClick} disabled={isLoading}/>
                 </div>
+                {error && <ErrorMessage message={error} />}
                 <Warning label={"Already Registered?"} linkText={"Sign in"} to={"/signin"} />
             </div>
         </div>
+    </div>
+}
+function ErrorMessage({message}: {message: string}){
+    return<div className="font-semibold text-sm text-red-600">
+        {message}
     </div>
 }

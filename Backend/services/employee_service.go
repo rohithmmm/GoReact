@@ -6,7 +6,13 @@ import (
 	_ "database/sql"
 	"errors"
 	"fmt"
+	"github.com/golang-jwt/jwt/v5"
 	_ "github.com/lib/pq"
+	"os"
+	"time"
+
+	_ "github.com/joho/godotenv"
+	_ "github.com/labstack/echo-jwt/v4"
 )
 
 func AddEmployeeService(employee *models.Employee) error {
@@ -23,11 +29,23 @@ func AddEmployeeService(employee *models.Employee) error {
 	return nil
 }
 
-func GetEmployeeService(email string, password string) (string, error) {
+var TokenString string
+
+func GetEmployeeService(email string, password string) (string, string) {
 	var first_name string
 	if err := db.DB.QueryRow("SELECT first_name from employee WHERE email = $1 AND password = $2", email, password).Scan(&first_name); err != nil {
 		fmt.Println("Error in employee service")
-		return "", err
+		return "Incorrect email and password", "err"
 	}
-	return first_name, nil
+	token := jwt.NewWithClaims(jwt.SigningMethodHS256, jwt.MapClaims{
+		"email": email,
+		"time":  time.Now().Add(time.Hour * 24 * 30).Unix(),
+	})
+
+	TokenString, err := token.SignedString([]byte(os.Getenv("SECRET")))
+	if err != nil {
+		return "Failed to create a token", ""
+	}
+
+	return first_name, TokenString
 }

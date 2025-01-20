@@ -10,5 +10,5 @@ func RegisterRoutes(e *echo.Echo) {
 	e.POST("/clockIn", ClockInHandler)
 	e.POST("/clockOut", ClockOutHandler)
 	e.POST("/addEmployee", AddEmployee)
-	e.POST("/getEmployeeByEmailAndPassword", GetEmployee)
+	e.POST("/signIn", GetEmployee)
 }

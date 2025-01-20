@@ -15,19 +15,24 @@ func GetTimesheetController(c echo.Context) error {
 	return c.JSON(http.StatusOK, timesheet)
 }
 
-func ClockInController(email string, c echo.Context) error {
+func ClockInController(email string, token string, c echo.Context) error {
 	var clockInTime string
-	if clockInTime = services.ClockInService(email); clockInTime == "error" {
+	if clockInTime = services.ClockInService(email, token); clockInTime == "error" {
 		return c.JSON(http.StatusInternalServerError, "ClockIn Error")
+	} else if clockInTime == "Invalid token" {
+		return c.JSON(http.StatusForbidden, "Unauthorized access")
+	} else if clockInTime == "Unauthorized" {
+		return c.JSON(http.StatusForbidden, "Unauthorized access")
 	}
 	return c.JSON(http.StatusCreated, "Clocked in at "+clockInTime)
 }
 
-func ClockOutController(c echo.Context) error {
+func ClockOutController(email string, token string, c echo.Context) error {
 	var clockOutTime string
-	if clockOutTime = services.ClockOutService(); clockOutTime == "error" {
-		fmt.Println("Error")
-		return nil
+	if clockOutTime = services.ClockOutService(email, token); clockOutTime == "error" {
+		return c.JSON(http.StatusInternalServerError, "ClockOut Error")
+	} else if clockOutTime == "" {
+		return c.JSON(http.StatusForbidden, "Unauthorized access")
 	}
-	return c.JSON(http.StatusCreated, "Clocked out at "+clockOutTime)
+	return c.JSON(http.StatusCreated, "Clocked in at "+clockOutTime)
 }

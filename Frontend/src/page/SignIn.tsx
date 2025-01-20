@@ -1,6 +1,6 @@
 import axios from "axios";
 import { useRef, useState } from "react";
-// import { useNavigate } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import { Button } from "../components/Button";
 import { Header } from "../components/Header";
 import { Heading } from "../components/Heading";
@@ -14,7 +14,7 @@ export function SignIn(){
     
     const emailRef = useRef<HTMLInputElement>(null);
     const passwordRef = useRef<HTMLInputElement>(null);
-    // const redirect = useNavigate();
+    const redirect = useNavigate();
 
     async function handleClick(){
         const email = emailRef.current?.value;
@@ -32,7 +32,8 @@ export function SignIn(){
                 password
             })
             console.log(response.data);
-            // redirect('/');
+            localStorage.setItem("token", response.token);
+            redirect('/dashboard');
         } catch(error) {
             console.error(error);
             setIsLoading(false);

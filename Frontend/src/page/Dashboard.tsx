@@ -1,17 +1,52 @@
 import { useState } from "react";
 import { Header } from "../components/Header";
+import axios from "axios";
+import { BASE_URL } from "../utils/config";
+import { useNavigate } from "react-router-dom";
 
 export function Dashboard(){
     const [clockIn, setClockIn] = useState<string | null>(null);
     const [clockOut, setClockOut] = useState<string | null>(null);
+    const redirect = useNavigate();
+    
+    const token = localStorage.getItem("token");
+    const email = localStorage.getItem("email");
+    
+    function checkToken(){
+        if(!token) {
+            console.log("Please SignIn again");
+            redirect('/signin');
+        }
+    }
     
 
-    function handleClockIn(){
-        // setClockIn();
+    async function handleClockIn(){
+        checkToken();
+        try {
+            const response = await axios.post(BASE_URL + "/clockIn", {
+                token,
+                email
+            })
+            console.log(response.data);
+            setClockIn(response.data)
+        } catch(err) {
+            console.error(err);
+        }
     }
 
-    function handleClockOut(){
-        // setClockOut();
+    async function handleClockOut(){
+        checkToken();
+
+        try {
+            const response = await axios.post(BASE_URL + "/clockOut", {
+                token,
+                email
+            })
+            console.log(response.data);
+            setClockOut(response.data)
+        } catch(err) {
+            console.error(err);
+        }
     }
 
     return<div className="bg-black h-screen flex justify-center">

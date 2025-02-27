@@ -32,7 +32,7 @@ export function SignIn(){
                 password
             })
             console.log(response.data);
-            localStorage.setItem("token", response.token);
+            localStorage.setItem("token", response.data.token);
             redirect('/dashboard');
         } catch(error) {
             console.error(error);

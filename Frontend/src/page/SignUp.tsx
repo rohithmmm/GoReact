@@ -48,7 +48,8 @@ export function SignUp(){
             })
             console.log(response.data);
             redirect('/signin');
-        } catch(error) {
+        // eslint-disable-next-line @typescript-eslint/no-explicit-any
+        } catch(error:any) {
             setError(error.response?.data);
             setIsLoading(false);
         }
